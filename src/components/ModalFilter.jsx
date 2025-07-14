@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { MapPinIcon } from "@heroicons/react/16/solid";
+import { XMarkIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 
 export default function ModalFilter({ cerrarModal, setFiltros }) {
@@ -56,10 +57,17 @@ export default function ModalFilter({ cerrarModal, setFiltros }) {
         className="overlay fixed top-0 w-full h-full bg-black/50 z-20"
       ></div>
 
-      <div className="fixed top-0 w-full h-[50vh] bg-white z-20 flex flex-row py-10 justify-between px-20">
-        <div className="flex flex-row gap-4">
-          {/* input location  */}
-          <div className="relative rounded-2xl px-4 py-2 w-[50%] h-14 border border-transparent focus-within:border-gray-800 transition">
+      <div className="fixed top-0 w-full h-[80vh] md:h-[50vh] bg-white z-20 flex flex-col md:flex-row py-10 md:justify-between px-20 gap-4 md:gap-8">
+        <div className="flex justify-between items-center md:hidden ">
+          <p className="font-semibold">Edit your search</p>
+          <button onClick={cerrarModal} aria-label="Cerrar modal">
+            <XMarkIcon className="size-6 text-gray-700" />
+          </button>
+        </div>
+
+        <div className="flex flex-col md:flex-row gap-2 md:gap-4">
+          {/* input locatin  */}
+          <div className="relative rounded-2xl px-0 md:px-4 py-2 w-[50%] h-14 border border-transparent focus-within:border-gray-800 transition">
             <p className="text-xs text-gray-800">LOCATION</p>
             <input
               className="outline-none"
@@ -88,7 +96,7 @@ export default function ModalFilter({ cerrarModal, setFiltros }) {
           </div>
 
           {/* input guests */}
-          <div className="relative ounded-2xl px-4 py-2 w-[50%] h-14 border border-transparent rounded-2xl focus-within:border-gray-800 transition">
+          <div className="relative ounded-2xl px-0 md:px-4 py-2 w-[50%] h-14 border border-transparent rounded-2xl focus-within:border-gray-800 transition">
             <p className="text-xs text-gray-800">GUESTS</p>
             <input
               type="number"
@@ -154,7 +162,7 @@ export default function ModalFilter({ cerrarModal, setFiltros }) {
             });
             cerrarModal();
           }}
-          className="flex flex-row bg-[#ea5657] gap-2 px-4 py-2 rounded-2xl h-10 w-35 items-center mt-1 hover:cursor-pointer"
+          className="flex flex-row bg-[#ea5657] gap-2 px-4 py-2 rounded-2xl h-10 w-35 items-center mt-[32vh] md:mt-0 hover:cursor-pointer place-self-center md:place-self-auto "
         >
           <MagnifyingGlassIcon className="size-6 text-white" />
           <p className="text-white">search</p>
