@@ -3,10 +3,11 @@ import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { MapPinIcon } from "@heroicons/react/16/solid";
 import axios from "axios";
 
-export default function ModalFilter({ cerrarModal }) {
+export default function ModalFilter({ cerrarModal, setFiltros }) {
   const [locationInput, setLocationInput] = useState("");
   const [cities, setCities] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
+  const [guestsInput, setGuestsInput] = useState("");
 
   useEffect(() => {
     axios
@@ -37,6 +38,7 @@ export default function ModalFilter({ cerrarModal }) {
       ></div>
       <div className="fixed top-0 w-full h-[50vh] bg-white z-20 flex flex-row py-10 justify-between px-20">
         <div className="flex flex-row">
+          {/* input location  */}
           <div className=" relative rounded-2xl px-4 py-2 w-[50%] h-14 border border-transparent focus-within:border-gray-800 transition">
             <p className="text-xs text-gray-800">LOCATION</p>
             <input
@@ -64,13 +66,31 @@ export default function ModalFilter({ cerrarModal }) {
               </ul>
             )}
           </div>
-          <div className=" rounded-2xl px-4 py-2 w-[50%] h-14">
+
+          {/* input guests */}
+          <div className="rounded-2xl px-4 py-2 w-[50%] h-14 border border-transparent focus-within:border-gray-800 transition">
             <p className="text-xs text-gray-800">GUESTS</p>
-            <input type="text" placeholder="Add guests" />
+            <input
+              type="number"
+              min="1"
+              placeholder="Add guests"
+              className="w-full outline-none"
+              value={guestsInput}
+              onChange={(e) => setGuestsInput(e.target.value)}
+            />
           </div>
         </div>
-        <button className="flex flex-row bg-[#ea5657] gap-2 px-4 py-2 rounded-2xl h-10 w-35 items-center mt-1">
-          <MagnifyingGlassIcon className="size-6 text-white"></MagnifyingGlassIcon>
+        <button
+          onClick={() => {
+            setFiltros({
+              location: locationInput.trim(),
+              guests: parseInt(guestsInput) || 0,
+            });
+            cerrarModal();
+          }}
+          className="flex flex-row bg-[#ea5657] gap-2 px-4 py-2 rounded-2xl h-10 w-35 items-center mt-1 hover:cursor-pointer"
+        >
+          <MagnifyingGlassIcon className="size-6 text-white" />
           <p className="text-white">search</p>
         </button>
       </div>

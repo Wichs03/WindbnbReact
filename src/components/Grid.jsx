@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { StarIcon } from "@heroicons/react/16/solid";
 
-export default function Grid() {
+export default function Grid({ filtros, setFilteredCount }) {
   const [stays, setStays] = useState([]);
 
   useEffect(() => {
@@ -12,13 +12,28 @@ export default function Grid() {
         setStays(res.data);
       })
       .catch((error) => {
-        console.error("Error al cargar los stays", error);
+        console.error(
+          "Error al cargar los stays. No eres tú, somos nosotros. Intenta nuevamente en unos minutos.",
+          error
+        );
       });
   }, []);
 
+  const staysFiltrados = stays.filter((stay) => {
+    const coincideCiudad =
+      filtros.location === "" || stay.city === filtros.location;
+    const cumpleHuespedes =
+      filtros.guests === 0 || stay.maxGuests >= filtros.guests;
+    return coincideCiudad && cumpleHuespedes;
+  });
+
+  useEffect(() => {
+    setFilteredCount(staysFiltrados.length);
+  }, [staysFiltrados, setFilteredCount]);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full px-5 md:px-12 lg:px-22 gap-6 md:gap-8 lg:gap-16 z-10">
-      {stays.map((stay, index) => (
+      {staysFiltrados.map((stay, index) => (
         <div className="card" key={index}>
           <img
             className="rounded-3xl aspect-[16/12] object-cover"
