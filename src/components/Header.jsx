@@ -6,7 +6,9 @@ export default function Header({ abrirModal }) {
   return (
     <div className="mb-4 z-10">
       <nav className="flex flex-row justify-between px-5 md:px-12 lg:px-22 py-6 items-center">
-        <img className="w-30" src={logo} alt="logo" />
+        <a href="/">
+          <img className="w-30" src={logo} alt="logo" />
+        </a>
         <div className="filterBar flex flex-row gap-5">
           <button
             onClick={abrirModal}
